@@ -56,20 +56,26 @@ function scrollToBottom() {
 }
 
 function addLocalMsg(msg) {
+  var current = new Date();
+  var currentTime = current.toLocaleTimeString();
   chatMsgWindow.append(
-    $('<span/>', {'class': 'chat_msg_item chat_msg_item_local_user'}).append(msg)
+    $('<span/>', {'class': 'chat_msg_item chat_msg_item_local_user'}).append(currentTime).append('</br>').append(msg)
   );
   // scroll to bottom
   scrollToBottom();
 }
 
-function addRemoteMsg(uid, msg) {
+function addRemoteMsg(uid, msg, username) {
+  var current = new Date();
+  var currentTime = current.toLocaleTimeString();
   console.log('message from: ' + uid);
   chatMsgWindow.append(
     $('<div/>', {'class': 'chat_msg_item chat_msg_item_remote_user'}).append(
       $('<div/>', {'class': 'chat_avatar'}).append(
-        // $('<img/>', {'src': 'https://res.cloudinary.com/dqvwa7vpe/image/upload/v1496415051/avatar_ma6vug.jpg'})
+         // $('<img/>', {'src': 'https://res.cloudinary.com/dqvwa7vpe/image/upload/v1496415051/avatar_ma6vug.jpg'})
       )
+    ).append(
+      $('<span/>').append(username+"\t "+currentTime).append('</br>')
     ).append(
       $('<span/>').append(msg)
     )

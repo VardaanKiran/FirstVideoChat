@@ -1,8 +1,9 @@
 let pubNub;
 let channelName;
 let UID;
+let user;
 
-function initPubNub(pubKey, subKey, uid, channel) {
+function initPubNub(pubKey, subKey, uid, channel, username) {
     console.log(pubKey, subKey)
     pubNub = new PubNub({
         publishKey : pubKey,
@@ -21,7 +22,7 @@ function initPubNub(pubKey, subKey, uid, channel) {
         message: function(msg) {
             console.log(msg);
             if (msg.message.uuid != UID) {
-                addRemoteMsg(msg.message.uuid, msg.message.description)
+                addRemoteMsg(msg.message.uuid, msg.message.description, msg.message.title)
             } else {
                 console.log('message sent successfully to channel');
             }
@@ -40,6 +41,7 @@ function initPubNub(pubKey, subKey, uid, channel) {
 
     channelName = channel;
     UID = uid;
+    user=username;
 }
 
 function publishMessage(message, callback) {
@@ -48,7 +50,7 @@ function publishMessage(message, callback) {
         sendByPost: true,
         message: { 
             uuid: UID,
-            title: "text",
+            title: user,
             description: message
         }
     }
