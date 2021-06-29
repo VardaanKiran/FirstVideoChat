@@ -4,7 +4,7 @@
 
 // video profile settings
 var cameraVideoProfile = '480p_4'; // 640 × 480 @ 30fps  & 750kbs
-var screenVideoProfile = '480p_2'; // 640 × 480 @ 30fps
+var screenVideoProfile = '1080p_1'; // 640 × 480 @ 30fps
 
 // create client instances for camera (client) and screen share (screenClient)
 var client = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'}); 
@@ -116,7 +116,7 @@ client.on("unmute-video", function (evt) {
 
 // join a channel
 function joinChannel(channelName, uid, token) {
-  client.join(token, channelName, uid, function(uid) {
+  client.join(token, channelName, null, function(uid) {
       console.log("User " + uid + " join channel successfully");
       createCameraStream(uid);
       localStreams.camera.id = uid; // keep track of the stream uid 
@@ -165,7 +165,7 @@ function initScreenShare(agoraAppId, channelName, token, uid) {
 
 function joinChannelAsScreenShare(channelName, token, uid) {
 
-  screenClient.join(token, channelName, null, function(uid) { 
+  screenClient.join(token, channelName, uid, function(uid) { 
    console.log(uid);
      localStreams.screen.id = uid;  // keep track of the uid of the screen stream.
     // Create the stream for screen sharing.
