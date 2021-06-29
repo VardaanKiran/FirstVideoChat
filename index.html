@@ -28,6 +28,11 @@
             <i id="exit-icon" class="fas fa-phone-slash"></i>
           </button>
         </div>
+        <!-- <div class="col-md-2 text-center">
+          <button id="screen-share-btn"  type="button" class="btn btn-block btn-danger btn-lg">
+            <i class="fas fa-share"></i>
+          </button>
+        </div> -->
       </div>
       <div id="full-screen-video"></div>
       <div id="lower-video-bar" class="row fixed-bottom mb-1">
@@ -166,15 +171,14 @@
 <script src="pubnub-interface.js"></script>
 <script src="chat.js"></script>
 <script type="text/javascript">
-  // init the session when user clicks join
-  // join channel modal
+
   $( "#join-channel" ).click(function( event ) {
     var agoraAppId = "0adf5b14219840e69ab936e11b3e4465";
-    var token = "006ab79c1d808104e05ac417e0ec640aabbIAAoFyVLSmML3B6bSvLpH81+xRtfidVdDYHouWarehs+4EOQEggAAAAAEACqPfBqpOPWYAEAAQCj49Zg";
+    var token = "0060adf5b14219840e69ab936e11b3e4465IAABr6bShL3SNKvkRZg/wJyQPODk5gbMrph4N4fpmvw3o0OQEggAAAAAEAAm+nFWWivcYAEAAQBYK9xg";
     var channelName = "myChannel";
+    var uid = $("#form-uid").val();
     var pubKey = "pub-c-178eb4b3-6665-4bf9-bf70-a1a7c8940d3a";
     var subKey = "sub-c-34a4d158-d42c-11eb-92a6-1ab188f49893";
-    var uid = $("#form-uid").val();
     var username = $("#form-username").val();
     $("#modalForm").modal("hide");
     initClientAndJoinChannel(agoraAppId, token, channelName, uid);

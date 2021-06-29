@@ -152,10 +152,10 @@ function createCameraStream(uid) {
 }
 
 // SCREEN SHARING
-function initScreenShare(agoraAppId, channelName) {
+function initScreenShare(agoraAppId, channelName, token, uid) {
   screenClient.init(agoraAppId, function () {
     console.log("AgoraRTC screenClient initialized");
-    joinChannelAsScreenShare(channelName);
+    joinChannelAsScreenShare(channelName, token, uid);
     screenShareActive = true;
     // TODO: add logic to swap button
   }, function (err) {
@@ -163,12 +163,11 @@ function initScreenShare(agoraAppId, channelName) {
   });  
 }
 
-function joinChannelAsScreenShare(channelName) {
-  var token = generateToken();
-  var userID = null; // set to null to auto generate uid on successfull connection
-  screenClient.join(token, channelName, userID, function(uid) { 
-    localStreams.screen.id = uid;  // keep track of the uid of the screen stream.
-    
+function joinChannelAsScreenShare(channelName, token, uid) {
+
+  screenClient.join(token, channelName, null, function(uid) { 
+   console.log(uid);
+     localStreams.screen.id = uid;  // keep track of the uid of the screen stream.
     // Create the stream for screen sharing.
     var screenStream = AgoraRTC.createStream({
       streamID: uid,
@@ -177,11 +176,13 @@ function joinChannelAsScreenShare(channelName) {
       screen: true, // screen stream
       mediaSource:  'screen', // Firefox: 'screen', 'application', 'window' (select one)
     });
+
     screenStream.setScreenProfile(screenVideoProfile); // set the profile of the screen
     screenStream.init(function(){
       console.log("getScreen successful");
       localStreams.screen.stream = screenStream; // keep track of the screen stream
       $("#screen-share-btn").prop("disabled",false); // enable button
+      screenStream.play('full-screen-video');
       screenClient.publish(screenStream, function (err) {
         console.log("[ERROR] : publish screen stream error: " + err);
       });
@@ -287,7 +288,7 @@ function leaveChannel() {
   });
 }
 
-// use tokens for added security
-function generateToken() {
-  return null; // TODO: add a token generation
-}
+// // use tokens for added security
+// function generateToken() {
+//   return null; // TODO: add a token generation
+// }

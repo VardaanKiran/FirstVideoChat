@@ -21,9 +21,11 @@ function enableUiControls(localStream) {
     if(screenShareActive){
       stopScreenShare();
     } else {
-      var agoraAppId = $('#form-appid').val();
-      var channelName = $('#form-channel').val();
-      initScreenShare(agoraAppId, channelName); 
+      var agoraAppId = "0adf5b14219840e69ab936e11b3e4465";
+      var channelName = "myChannel";
+      var token = "0060adf5b14219840e69ab936e11b3e4465IAABr6bShL3SNKvkRZg/wJyQPODk5gbMrph4N4fpmvw3o0OQEggAAAAAEAAm+nFWWivcYAEAAQBYK9xg";
+      var uid = $("#form-uid").val();
+      initScreenShare(agoraAppId, channelName, token, uid); 
     }
   });
 
@@ -38,15 +40,15 @@ function enableUiControls(localStream) {
     if(!$(chatToggleBtn.hasClass('is-visible'))){
       switch (e.key) {
         case "m":
-          console.log("squick toggle the mic");
-          toggleMic(localStream);
-          break;
+        console.log("squick toggle the mic");
+        toggleMic(localStream);
+        break;
         case "v":
-          console.log("quick toggle the video");
-          toggleVideo(localStream);
-          break; 
+        console.log("quick toggle the video");
+        toggleVideo(localStream);
+        break; 
         case "s":
-          console.log("initializing screen share");
+        console.log("initializing screen share");
           toggleScreenShareBtn(); // set screen share button icon
           $("#screen-share-btn").prop("disabled",true); // disable the button on click
           if(screenShareActive){
@@ -55,13 +57,13 @@ function enableUiControls(localStream) {
             initScreenShare(); 
           }
           break;  
-        case "q":
+          case "q":
           console.log("so sad to see you quit the channel");
           leaveChannel(); 
           break;   
         default:  // do nothing
       }
-  
+
       // (for testing) 
       if(e.key === "r") { 
         window.history.back(); // quick reset
@@ -117,11 +119,11 @@ function toggleVideo(localStream) {
 // force uid input to range (1001-1017) - max 17 broadcaster users
 var $uidInput = $("#form-uid")
 $uidInput.on("change", function (evt) {
-    var value = $uidInput.val()
-    if (value == 1018 || value < 1000) {
-      value = 1001;
-    } else if (value == 1000 || value > 1018 ) {
-      value = 1017;
-    }   
-    $uidInput.val(value)
+  var value = $uidInput.val()
+  if (value == 1018 || value < 1000) {
+    value = 1001;
+  } else if (value == 1000 || value > 1018 ) {
+    value = 1017;
+  }   
+  $uidInput.val(value)
 })
